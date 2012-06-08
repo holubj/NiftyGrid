@@ -1,0 +1,348 @@
+
+.grid{
+    margin: 0;
+    padding: 0;
+    clear:both;
+}
+
+.grid input[type=submit]{
+    border:0;
+    background-color: #000000;
+    color:#FFF;
+    cursor:pointer;
+    text-align:center;
+    font-size:16px;
+    float:left;
+}
+
+.grid select{
+    font-size:16px;
+}
+
+.grid .grid-upper-panel{
+    color: #FFF;
+    float: right;
+    font-weight: normal;
+}
+
+.grid .grid-current-link{
+    background: url("../images/link.png") no-repeat 3px 3px;
+    width:21px;
+    height:21px;
+    display:inline-block;
+    float:left;
+}
+
+.grid .grid-results{
+    background-color: #000;
+    height: 19px;
+    padding: 3px 10px;
+    margin-left:28px;
+ }
+
+
+.grid th.grid-head-column{
+    background-color: #e8e8e8;
+    height: 30px;
+    font-size: 16px;
+    padding: 0px 10px;
+    text-align:left;
+}
+
+.grid th.grid-head-column a{
+    text-decoration:none;
+    color:#000;
+}
+
+.grid tr.grid-row-odd{
+    background-color:#FFF;
+}
+
+.grid tr.grid-row-even{
+    background-color:#f8f8f8;
+}
+
+.grid tr td.grid-row-cell{
+    height: 30px;
+    font-size: 14px;
+    padding:0px 10px 0px 10px;
+    border-right:1px solid #f2f2f2;
+    border-bottom: 1px solid #f2f2f2;
+}
+
+.grid tr td.grid-row-cell:first-child{
+    border-left:1px solid #f2f2f2;
+}
+
+.grid .grid-order{
+    display: inline-block;
+    width: 10px;
+    height: 15px;
+    margin-top: 3px;
+    position: absolute;
+    margin-left: 5px;
+}
+
+.grid .grid-order .grid-order-up{
+    background: url("../images/triangle-up.png") no-repeat;
+    width: 10px;
+    height: 7px;
+    display: block;
+}
+
+.grid .grid-order .grid-order-down{
+    background: url("../images/triangle-down.png") no-repeat;
+    width: 10px;
+    height: 7px;
+    display: block;
+    margin-top: 1px;
+}
+
+.grid .grid-order .grid-order-active-up{
+    background: url("../images/triangle-up-red.png") no-repeat;
+}
+
+.grid .grid-order .grid-order-active-down{
+    background: url("../images/triangle-down-red.png") no-repeat;
+}
+
+.grid .grid-bottom{
+    background:#e8e8e8;
+    height:30px;
+    padding:0px 10px;
+}
+
+.grid .grid-action-box{
+    float:left;
+}
+
+.grid .grid-action-box label{
+    float: left;
+    font-size: 14px;
+    line-height: 30px;
+    margin-right: 10px;
+}
+
+.grid .grid-action-box input[type="submit"]{
+    height: 26px;
+    width: 75px;
+    margin-top: 2px;
+    padding-bottom: 2px;
+}
+
+.grid .grid-action-box select{
+    float: left;
+    width: 170px;
+    margin-right: 5px;
+    margin-top: 2px;
+    height: 26px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+}
+
+.grid .grid-perPage{
+    float:right;
+}
+
+.grid .grid-perPage label{
+    float: left;
+    font-size: 14px;
+    line-height: 30px;
+    margin-right: 10px;
+}
+
+.grid .grid-perPage select{
+    float: left;
+    width: 75px;
+    height: 26px;
+    margin-top: 2px;
+    border: 1px solid #ccc;
+}
+
+.grid .grid-perPage input[type="submit"]{
+    height: 26px;
+    width: 30px;
+    padding-bottom: 2px;
+    margin-top: 2px;
+    margin-left:5px;
+}
+
+.grid .grid-paginator{
+    float: right;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+.grid .grid-paginator a, .grid-paginator span {
+    color: #999;
+    background-color: #e8e8e8;
+    font-size: 16px;
+    display:inline-block;
+    height:18px;
+    line-height: 20px;
+    padding:4px 8px;
+}
+
+.grid .grid-paginator a {
+    color: #FFF;
+    background-color: #000;
+    text-decoration: none;
+    display:inline-block;
+    height:18px;
+    line-height: 20px;
+}
+
+.grid .grid-paginator .grid-current {
+    background: #e8e8e8;
+    color: #999;
+    font-weight: bold;
+    display:inline-block;
+    height:18px;
+    line-height: 20px;
+    padding:4px 8px;
+}
+
+.grid .grid-filter-form{
+    background-color:#ccc;
+    padding:0px 10px;
+    height:34px;
+}
+
+.grid .grid-filter-form-active{
+    background-color: #0078ff;
+}
+
+.grid .grid-filter-form input[type="text"]{
+    width:100%;
+    height:24px;
+    color:#000;
+    background-color:#FFF;
+    padding:0px;
+    border:0;
+    font-size:16px;
+}
+
+.grid .grid-filter-form select{
+    width:100%;
+    border: 1px solid #ccc;
+    height:26px;
+    font-size:16px;
+}
+
+.grid .grid-filter-form input[type="submit"]{
+    height:24px;
+    width:70px;
+    margin-right:1px;
+}
+
+.grid .grid-filter-reset{
+    width:24px;
+    height:24px;
+    background: url('../images/cancel_white.png') no-repeat #0078ff 3px;
+    display:block;
+    margin-left:71px;
+}
+
+.grid .grid-datepicker{
+    background: url("../images/calendar.png") no-repeat right center;
+}
+
+.grid .grid-panel td, .grid-panel th{
+    border:0px solid #F0F;
+    padding:0;
+    margin:0;
+}
+
+.grid .grid-button{
+    width: 24px;
+    height: 22px;
+    color: #FFF;
+    display: block;
+    float: left;
+}
+
+.ui-autocomplete{
+    padding:0;
+}
+
+.ui-menu-item{
+    text-align:left;
+    list-style:none;
+    margin-left:10px;
+    font-size:14px;
+}
+
+.grid input[type="text"].grid-editable{
+    padding:0px;
+    height:25px;
+    width:100%;
+    background-color:#FFF;
+    border: 1px solid #ccc;
+    font-size:14px;
+}
+
+.grid input[type="submit"].grid-editable{
+    height: 24px;
+    width: 70px;
+}
+
+.grid a.grid-rowForm-cancel{
+    border:0;
+    background: url("../images/cancel_white.png") no-repeat scroll 3px 50% #0078FF;
+    display: block;
+    height: 24px;
+    margin-left: 71px;
+    width: 24px;
+}
+
+.grid select.grid-editable{
+    width:100%;
+    height:25px;
+    border: 1px solid #ccc;
+    font-size:14px;
+}
+
+.grid .grid-edited-cell{
+    background-color: #e5e5e5;
+}
+
+.grid .grid-subgrid-open{
+    background: url('../images/subgrid_open.png') no-repeat 4px;
+}
+.grid .grid-subgrid-close{
+    background: url('../images/subgrid_close.png') no-repeat 4px;
+}
+
+.grid-flash{
+    height: 30px;
+    text-align:left;
+}
+
+.grid-flash span{
+    color: #FFF;
+    padding-top: 4px;
+    padding-left: 20px;
+    font-weight:normal;
+}
+
+.grid-flash-hide{
+    float: right;
+    margin-right: 20px;
+    cursor: pointer;
+    background: url("../images/cross.png") no-repeat;
+    width: 22px;
+    height: 22px;
+    display: block;
+}
+
+.grid-error{
+    background-color: #ef4040;
+}
+
+.grid-info{
+    background-color: #0078ff;
+}
+
+.grid-successful{
+    background-color: #25c319;
+}

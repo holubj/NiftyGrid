@@ -1,0 +1,35 @@
+*{
+    font-family: 'PT Sans', sans-serif;
+}
+
+.link{
+    background: url('../images/link.png') no-repeat 4px #FFF;
+}
+
+.edit{
+    background: url('../images/edit.png') no-repeat 4px;
+}
+
+.fast-edit{
+    background: url('../images/fast_edit.png') no-repeat 4px;
+}
+
+.delete{
+    background: url('../images/delete.png') no-repeat 4px;
+}
+
+.trash{
+    background: url('../images/trash.png') no-repeat 4px;
+}
+
+.publish{
+    background: url('../images/publish.png') no-repeat 4px;
+}
+
+.unpublish{
+    background: url('../images/unpublish.png') no-repeat 4px;
+}
+
+.restore{
+    background: url('../images/restore.png') no-repeat 4px;
+}

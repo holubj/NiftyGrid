@@ -1,0 +1,120 @@
+{*
+/**
+* NiftyGrid - DataGrid for Nette
+*
+* @author		Jakub Holub
+* @copyright	Copyright (c) 2012 Jakub Holub
+* @license     New BSD Licence
+* @link        http://addons.nette.org/cs/niftygrid
+*/
+*}
+{snippet}
+{if !$control->isSubGrid}
+{$control['gridForm']->render('begin')}
+{/if}
+<table n:attr="width => $control->width ? $control->width" class="grid" border="0" cellpadding="0" cellspacing="0">
+	<thead>
+		<tr class="grid-panel">
+			<th colspan="{$colsCount}">
+				<div class="grid-upper-panel">
+					<a n:href="this" class="grid-current-link" title="Získat odkaz na tuto stránku"></a>
+					<div class="grid-results">
+						celkem {$results} {($results == 1) ? "záznam" : (($results >= 2 && $results <= 4) ? "záznamy" : "záznamů")}{if $paginate} {if (boolean)$results}(Zobrazeno {$viewedFrom} až {$viewedTo}){/if}{/if}
+					</div>
+				</div>
+			</th>
+		</tr>
+		<tr n:foreach="$flashes as $flash" class="grid-flash {$flash->type}">
+			<th colspan="{$colsCount}">
+				<span>{$flash->message}</span>
+				<div class="grid-flash-hide"></div>
+			</th>
+		</tr>
+		<tr>
+			<th n:if="$control->hasActionForm()" width="16px" style="text-align:center;" class="grid-head-column"><input type="checkbox" class="grid-select-all" title="Označit/odznačit všechny záznamy"></th>
+			<th n:foreach="$subGrids as $subGrid" width="26px" class="grid-head-column"></th>
+			<th n:foreach="$columns as $column" n:attr="width => $column->width" class="grid-head-column">{if $control->hasEnabledSorting() && $column->isSortable()}{var $order = ($control->order == $column->name.' ASC') ? " DESC" : " ASC"}<a n:href="this, 'order' => $column->name.$order" class="grid-ajax" title="Obrátit řazení">{$column->label}</a>{else}{$column->label}{/if}
+				<div class="grid-order" n:if="$column->isSortable() && $control->hasEnabledSorting()">
+					<a n:href="this, 'order' => $column->name.' ASC'" n:class="grid-ajax, grid-order-up ,($control->order && ($control->order == $column->name.' ASC')) ? grid-order-active-up" title="Řadit vzestupně"></a>
+					<a n:href="this, 'order' => $column->name.' DESC'" n:class="grid-ajax, grid-order-down ,($control->order && ($control->order == $column->name.' DESC')) ? grid-order-active-down" title="Řadit sestupně"></a>
+				</div>
+			</th>
+			<th n:if="$control->hasButtons() || $control->hasFilterForm()" class="grid-head-column">Akce</th>
+		</tr>
+		<tr n:if="$control->hasFilterForm()">
+			<th n:if="$control->hasActionForm()" class="grid-filter-form"></th>
+			<th n:foreach="$subGrids as $subGrid" class="grid-filter-form"></th>
+			<th n:foreach="$columns as $column" n:attr="class => array(grid-filter-form, $control->isSpecificFilterActive($column->name) ? grid-filter-form-active)">
+				{if $column->hasFilter()}
+					{$control['gridForm'][$control->name]['filter'][$column->name]->getControl()}
+				{/if}
+			</th>
+			<th class="grid-filter-form">{$control['gridForm'][$control->name]['filter']['send']->getControl()}<a n:if="$control->hasActiveFilter()" n:href="this, filter => NULL" title="Zrušit filtr" class="grid-filter-reset grid-ajax"></a></th>
+		</tr>
+	</thead>
+	<tbody>
+		{if count($rows)}
+		{foreach $rows as $row}
+		<tr n:attr="class => $iterator->isOdd() ? grid-row-odd : grid-row-even">
+			<td n:if="$control->hasActionForm()" align="center" n:attr="class => array(grid-row-cell, grid-action-checkbox, $control->isEditable() && $control->activeRowForm == $row['id'] ? 'grid-edited-cell')">{$control->assignCheckboxToRow($row['id'])}</td>
+			<td n:foreach="$subGrids as $subgrid" n:attr="class => array(grid-row-cell, $control->isEditable() && $control->activeRowForm == $row['id'] ? 'grid-edited-cell')">
+				{control $subgrid $row}
+			</td>
+			<td n:foreach="$columns as $column" n:attr="class => array(grid-row-cell, $control->isEditable() && $control->activeRowForm == $row['id'] ? 'grid-edited-cell'), style => $column->hasCellRenderer() ? $column->getCellRenderer($row)">
+				{if $control->isEditable() && $column->editable && $control->activeRowForm == $row['id']}
+					{$control['gridForm'][$control->name]['rowForm'][$column->name]->getControl()}
+				{else}
+					{$column->prepareValue($row)}
+				{/if}
+			</td>
+			<td n:if="$control->hasButtons() || $control->hasFilterForm()" n:attr="class => array(grid-row-cell, $control->isEditable() && $control->activeRowForm == $row['id'] ? 'grid-edited-cell')">
+				{if $control->activeRowForm == $row['id'] && $control->isEditable()}
+					{$control['gridForm'][$control->name]['rowForm']['send']->getControl()}
+					<a class="grid-rowForm-cancel grid-ajax" n:href="this" title="Zrušit editaci"></a>
+					{$control['gridForm'][$control->name]['rowForm']['id']->getControl()}
+				{else}
+					{foreach $buttons as $button}
+						{control $button $row}
+					{/foreach}
+				{/if}
+			</td>
+		</tr>
+		<tr n:if="$control->hasActiveSubGrid() && $control->activeSubGridId == $row['id']" class="grid-subgrid-row">
+			<td colspan="{$colsCount}" align="center" n:attr="style => $control['subGrids-'.$control->activeSubGridName]->hasCellStyle() ? $control['subGrids-'.$control->activeSubGridName]->getCellStyle().'border-bottom:1px solid #f2f2f2;'">
+				{control $control['subGrid'.$control->activeSubGridName]}
+			</td>
+		</tr>
+		{/foreach}
+		{else}
+		<tr>
+			<td class="grid-row-cell" style="background-color:#FFF; font-size:16px;" colspan="{$colsCount}">Žádné záznamy</td>
+		</tr>
+		{/if}
+	</tbody>
+	<tfoot>
+		<tr>
+			<td colspan="{$colsCount}" class="grid-bottom">
+				<span n:if="$control->hasActionForm()" class="grid-action-box">
+						{$control['gridForm'][$control->name]['action']['action_name']->label}
+						{$control['gridForm'][$control->name]['action']['action_name']->getControl()}
+						{$control['gridForm'][$control->name]['action']['send']->getControl()}
+				</span>
+				<span n:if="$paginate" class="grid-perPage">
+						{$control['gridForm'][$control->name]['perPage']['perPage']->label}
+						{$control['gridForm'][$control->name]['perPage']['perPage']->getControl()}
+						{$control['gridForm'][$control->name]['perPage']['send']->getControl()}
+				</span>
+			</td>
+		</tr>
+		<tr n:if="$paginate" class="grid-panel">
+			<td colspan="{$colsCount}">
+				{control paginator}
+			</td>
+		</tr>
+	</tfoot>
+</table>
+{if !$control->isSubGrid}
+{$control['gridForm']->render('end')}
+{/if}
+{/snippet}
+
