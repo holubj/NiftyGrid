@@ -4,8 +4,8 @@
  *
  * @author	Jakub Holub
  * @copyright	Copyright (c) 2012 Jakub Holub
- * @license     New BSD Licence
- * @link        http://addons.nette.org/cs/niftygrid
+ * @license	New BSD Licence
+ * @link	http://addons.nette.org/cs/niftygrid
  */
 namespace NiftyGrid;
 
