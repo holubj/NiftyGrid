@@ -2,7 +2,7 @@
 /**
  * NiftyGrid - DataGrid for Nette
  *
- * @author		Jakub Holub
+ * @author	akub Holub
  * @copyright	Copyright (c) 2012 Jakub Holub
  * @license     New BSD Licence
  * @link        http://addons.nette.org/cs/niftygrid
