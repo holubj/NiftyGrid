@@ -233,7 +233,7 @@ class Column extends \Nette\Application\UI\PresenterComponent
 	 * @return Column
 	 * @throws DuplicateEditableColumnException
 	 */
-	public function setSelectEditable(array $values, $prompt = "-----")
+	public function setSelectEditable(array $values, $prompt = NULL)
 	{
 		if($this->editable){
 			throw new DuplicateEditableColumnException("Column $this->name is already editable.");
