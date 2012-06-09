@@ -387,7 +387,7 @@ class Column extends \Nette\Application\UI\PresenterComponent
 	 * @param string $prompt
 	 * @return Column
 	 */
-	public function setBooleanFilter($values = array(0 => "Ano", 1 => "Ne"), $prompt = "-----")
+	public function setBooleanFilter($values = array(0 => "Ne", 1 => "Ano"), $prompt = "-----")
 	{
 		$this->setSelectFilter($values, $prompt);
 		$this->filterType = FilterCondition::BOOLEAN;
