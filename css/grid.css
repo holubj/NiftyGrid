@@ -1,4 +1,3 @@
-
 .grid{
     margin: 0;
     padding: 0;
@@ -26,7 +25,7 @@
 }
 
 .grid .grid-current-link{
-    background: url("../images/link.png") no-repeat 3px 3px;
+    background: url("images/link.png") no-repeat 3px 3px;
     width:21px;
     height:21px;
     display:inline-block;
@@ -84,14 +83,14 @@
 }
 
 .grid .grid-order .grid-order-up{
-    background: url("../images/triangle-up.png") no-repeat;
+    background: url("images/triangle-up.png") no-repeat;
     width: 10px;
     height: 7px;
     display: block;
 }
 
 .grid .grid-order .grid-order-down{
-    background: url("../images/triangle-down.png") no-repeat;
+    background: url("images/triangle-down.png") no-repeat;
     width: 10px;
     height: 7px;
     display: block;
@@ -99,11 +98,11 @@
 }
 
 .grid .grid-order .grid-order-active-up{
-    background: url("../images/triangle-up-red.png") no-repeat;
+    background: url("images/triangle-up-red.png") no-repeat;
 }
 
 .grid .grid-order .grid-order-active-down{
-    background: url("../images/triangle-down-red.png") no-repeat;
+    background: url("images/triangle-down-red.png") no-repeat;
 }
 
 .grid .grid-bottom{
@@ -238,13 +237,13 @@
 .grid .grid-filter-reset{
     width:24px;
     height:24px;
-    background: url('../images/cancel_white.png') no-repeat #0078ff 3px;
+    background: url('images/cancel_white.png') no-repeat #0078ff 3px;
     display:block;
     margin-left:71px;
 }
 
 .grid .grid-datepicker{
-    background: url("../images/calendar.png") no-repeat right center;
+    background: url("images/calendar.png") no-repeat right center;
 }
 
 .grid .grid-panel td, .grid-panel th{
@@ -288,7 +287,7 @@
 
 .grid a.grid-rowForm-cancel{
     border:0;
-    background: url("../images/cancel_white.png") no-repeat scroll 3px 50% #0078FF;
+    background: url("images/cancel_white.png") no-repeat scroll 3px 50% #0078FF;
     display: block;
     height: 24px;
     margin-left: 71px;
@@ -307,10 +306,10 @@
 }
 
 .grid .grid-subgrid-open{
-    background: url('../images/subgrid_open.png') no-repeat 4px;
+    background: url('images/subgrid_open.png') no-repeat 4px;
 }
 .grid .grid-subgrid-close{
-    background: url('../images/subgrid_close.png') no-repeat 4px;
+    background: url('images/subgrid_close.png') no-repeat 4px;
 }
 
 .grid-flash{
@@ -329,7 +328,7 @@
     float: right;
     margin-right: 20px;
     cursor: pointer;
-    background: url("../images/cross.png") no-repeat;
+    background: url("images/cross.png") no-repeat;
     width: 22px;
     height: 22px;
     display: block;
