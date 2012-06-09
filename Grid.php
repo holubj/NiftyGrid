@@ -215,14 +215,13 @@ class Grid extends \Nette\Application\UI\Control
 			$button->setLink(function($row) use($self){
 				return $self->link("showRowForm!", $row['id']);
 			});
-			$button->setLabel($label);
 		}else{
 			if(!empty($this['buttons']->components[$name])){
 				throw new DuplicateButtonException("Button $name already exists.");
 			}
 			$button = new Button($this['buttons'], $name);
-			$button->setLabel($label);
 		}
+		$button->setLabel($label);
 		return $button;
 	}
 
