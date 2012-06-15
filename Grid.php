@@ -788,7 +788,7 @@ class Grid extends \Nette\Application\UI\Control
 		$paginators = array();
 		foreach($values as $gridName => $grid){
 			foreach($grid['filter'] as $name => $value){
-				if(!empty($value)){
+				if($value != ''){
 					if($name == "send"){
 						continue;
 					}
@@ -803,6 +803,7 @@ class Grid extends \Nette\Application\UI\Control
 			}
 			$paginators[$gridName."-paginator-page"] = NULL;
 		}
+		if(empty($filters)) $filters[$this->name."-filter"] = array();
 		$this->presenter->redirect("this", array_merge($filters, $paginators));
 	}
 
