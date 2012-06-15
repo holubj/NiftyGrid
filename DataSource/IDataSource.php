@@ -2,7 +2,7 @@
 /**
  * NiftyGrid - DataGrid for Nette
  *
- * @author		Jakub Holub
+ * @author	Jakub Holub
  * @copyright	Copyright (c) 2012 Jakub Holub
  * @license     New BSD Licence
  * @link        http://addons.nette.org/cs/niftygrid
@@ -11,12 +11,6 @@ namespace NiftyGrid;
 
 interface IDataSource
 {
-	/**
-	 * Receive data
-	 * @param $data
-	 */
-	public function __construct($data);
-
 	/**
 	 * Returns data
 	 */
