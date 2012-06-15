@@ -18,17 +18,15 @@ class DoctrineDataSource implements IDataSource
 {
 	private $qb;
 
-	public function __construct($qb, array $aliases)
+	private $primary;
+
+	public function __construct($qb, $primary)
 	{
 		// Query builder
 		$this->qb = $qb;
 
-		// Mapped column to entities
-		/**
-		 * array("name for grid (alphanumeric)" => "name for doctrine, as query builder")
-		 * exaple: array("published" => "a.published")
-		 */
-		$this->aliases = $aliases;
+		// Primary id
+		$this->primary = $primary;
 	}
 
 	public function getQuery()
@@ -36,12 +34,19 @@ class DoctrineDataSource implements IDataSource
 		return $this->qb->getQuery();
 	}
 
-	public $aliases = array();
-
 
 	public function getData()
 	{
-		return $this->getQuery()->getArrayResult();
+		$result = array();
+		foreach($this->getQuery()->getScalarResult() as $values) {
+			$id = $result[$values[$this->primary]]['id'] = $values[$this->primary];
+
+			foreach($values as $column => $value) {
+				$result[$id][$column] = $value;
+			}
+		}
+
+		return $result;
 	}
 
 	public function getCount($column = "*")
@@ -58,7 +63,7 @@ class DoctrineDataSource implements IDataSource
 
 	public function orderData($by, $way)
 	{
-		$this->qb->orderBy($this->aliases[$by], $way);
+		$this->qb->orderBy($this->columnName($by), $way);
 	}
 
 	public function limitData($limit, $offset)
@@ -72,7 +77,7 @@ class DoctrineDataSource implements IDataSource
 		foreach($filters as $filter){
 			if($filter["type"] == FilterCondition::WHERE){
 
-				$column = $this->aliases[$filter['column']];
+				$column = $this->columnName($filter['column']);
 				$value = $filter["value"];
 				$expr = $this->qb->expr();
 				$cond = false;
@@ -148,7 +153,7 @@ class DoctrineDataSource implements IDataSource
 				}
 
 			}elseif($filter["type"] == FilterCondition::HAVING){
-				$having[$this->aliases[$filter["column"]]] = $filter;
+				$having[$this->columnName($filter['column'])] = $filter;
 			}
 		}
 
@@ -167,5 +172,13 @@ class DoctrineDataSource implements IDataSource
 			}
 			$this->qb->groupBy($stringHaving);
 		}
+	}
+
+	private function columnName($full)
+	{
+		$name = explode("_", $full);
+		$entity = $name[0];
+		unset($name[0]);
+		return $entity.".".implode("_", $name);
 	}
 }
