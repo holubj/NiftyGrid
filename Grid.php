@@ -787,12 +787,12 @@ class Grid extends \Nette\Application\UI\Control
 		$filters = array();
 		$paginators = array();
 		foreach($values as $gridName => $grid){
+			$isSubGrid = ($gridName == $this->name) ? FALSE : TRUE;
 			foreach($grid['filter'] as $name => $value){
 				if($value != ''){
 					if($name == "send"){
 						continue;
 					}
-					$isSubGrid = ($gridName == $this->name) ? FALSE : TRUE;
 					if($isSubGrid){
 						$gridName = $this->findSubGridPath($gridName);
 						$filters[$this->name."-".$gridName."-filter"][$name] = $value;
@@ -801,9 +801,13 @@ class Grid extends \Nette\Application\UI\Control
 					}
 				}
 			}
+			if($isSubGrid){
+				if(empty($filters[$this->name."-".$gridName."-filter"])) $filters[$this->name."-".$gridName."-filter"] = array();
+			}else{
+				if(empty($filters[$this->name."-filter"])) $filters[$this->name."-filter"] = array();
+			}
 			$paginators[$gridName."-paginator-page"] = NULL;
 		}
-		if(empty($filters)) $filters[$this->name."-filter"] = array();
 		$this->presenter->redirect("this", array_merge($filters, $paginators));
 	}
 
