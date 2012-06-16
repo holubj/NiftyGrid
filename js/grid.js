@@ -133,4 +133,15 @@ $(function(){
         setDatepicker();
         hidePerPageSubmit();
     });
+
+    $("input.grid-editable").live("keypress", function(e) {
+        if (e.keyCode == '13') {
+            e.preventDefault();
+            $("input[type=submit].grid-editable").click();
+        }
+    });
+
+    $("table.grid tbody tr:not(.grid-subgrid-row) td.grid-data-cell").live("dblclick", function(e) {
+        $(this).parent().find("a.grid-editable:first").click();
+    });
 });

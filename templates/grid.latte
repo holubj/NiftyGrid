@@ -60,7 +60,7 @@
 			<td n:foreach="$subGrids as $subgrid" n:attr="class => array(grid-row-cell, $control->isEditable() && $control->activeRowForm == $row['id'] ? 'grid-edited-cell')">
 				{control $subgrid $row}
 			</td>
-			<td n:foreach="$columns as $column" n:attr="class => array(grid-row-cell, $control->isEditable() && $control->activeRowForm == $row['id'] ? 'grid-edited-cell'), style => $column->hasCellRenderer() ? $column->getCellRenderer($row)">
+			<td n:foreach="$columns as $column" n:attr="class => array(grid-row-cell, grid-data-cell, $control->isEditable() && $control->activeRowForm == $row['id'] ? 'grid-edited-cell'), style => $column->hasCellRenderer() ? $column->getCellRenderer($row)">
 				{if $control->isEditable() && $column->editable && $control->activeRowForm == $row['id']}
 					{$control['gridForm'][$control->name]['rowForm'][$column->name]->getControl()}
 				{else}
