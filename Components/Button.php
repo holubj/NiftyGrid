@@ -10,6 +10,7 @@
 namespace NiftyGrid;
 
 use Nette\Utils\Html;
+use NiftyGrid\Grid; // For constant only
 
 class Button extends \Nette\Application\UI\PresenterComponent
 {
@@ -149,6 +150,10 @@ class Button extends \Nette\Application\UI\PresenterComponent
 			->setClass($this->getClass($row))
 			->addClass("grid-button")
 			->setTitle($this->getLabel($row));
+
+		if($this->getName() == Grid::ROW_FORM) {
+			$el->addClass("grid-editable");
+		}
 
 		if($this->hasConfirmationDialog()){
 			$el->addClass("grid-confirm")
