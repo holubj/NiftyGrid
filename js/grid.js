@@ -141,7 +141,7 @@ $(function(){
         }
     });
 
-    $("tbody tr").live("dblclick", function(e) {
+    $("table.grid tbody tr").live("dblclick", function(e) {
         $(this).find("a.grid-editable:first").click();
     });
 });
