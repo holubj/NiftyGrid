@@ -802,11 +802,12 @@ class Grid extends \Nette\Application\UI\Control
 				}
 			}
 			if($isSubGrid){
+				$paginators[$this->name."-".$gridName."-paginator-page"] = NULL;
 				if(empty($filters[$this->name."-".$gridName."-filter"])) $filters[$this->name."-".$gridName."-filter"] = array();
 			}else{
+				$paginators[$this->name."-paginator-page"] = NULL;
 				if(empty($filters[$this->name."-filter"])) $filters[$this->name."-filter"] = array();
 			}
-			$paginators[$gridName."-paginator-page"] = NULL;
 		}
 		$this->presenter->redirect("this", array_merge($filters, $paginators));
 	}
