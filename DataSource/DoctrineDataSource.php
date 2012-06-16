@@ -152,25 +152,7 @@ class DoctrineDataSource implements IDataSource
 					$this->qb->andWhere($cond);
 				}
 
-			}elseif($filter["type"] == FilterCondition::HAVING){
-				$having[$this->columnName($filter['column'])] = $filter;
 			}
-		}
-
-		if(!empty($having)){
-			$stringHaving = "";
-			$i = new \Nette\Iterators\CachingIterator($having);
-			foreach($i as $filter){
-				if(!empty($filter["columnFunction"])){
-					$stringHaving .= $filter["columnFunction"]."(".$this->aliases[$filter["column"]].")".$filter["cond"]."'".Strings::upper($filter["value"])."'";
-				}else{
-					$stringHaving .= $this->aliases[$filter["column"]].$filter["cond"]."'".Strings::upper($filter["value"])."'";
-				}
-				if(!$i->isLast()){
-					$stringHaving .= " AND ";
-				}
-			}
-			$this->qb->groupBy($stringHaving);
 		}
 	}
 
