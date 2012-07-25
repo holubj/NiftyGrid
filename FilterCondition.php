@@ -24,7 +24,6 @@ class FilterCondition extends \Nette\Object
 
 	/* condition types */
 	const WHERE = " WHERE ";
-	const HAVING = " HAVING ";
 
 	/* conditions names */
 	const CONTAINS = "contains";
@@ -384,6 +383,10 @@ class FilterCondition extends \Nette\Object
 			"value" => $value,
 			"columnFunction" => "DATE",
 			"valueFunction" => "DATE"
+		);
+	}
+}
+nction" => "DATE"
 		);
 	}
 }

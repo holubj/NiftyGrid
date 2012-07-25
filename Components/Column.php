@@ -15,6 +15,9 @@ class Column extends \Nette\Application\UI\PresenterComponent
 	/** @var string */
 	public $name;
 
+	/** @var string */
+	public $tableName;
+
 	/** @var callback|string */
 	public $label;
 
@@ -35,9 +38,6 @@ class Column extends \Nette\Application\UI\PresenterComponent
 
 	/** @var bool */
 	public $sortable = TRUE;
-
-	/** @var bool */
-	public $alias = FALSE;
 
 	/** @var string */
 	public $filterType;
@@ -69,6 +69,17 @@ class Column extends \Nette\Application\UI\PresenterComponent
 	public function setName($name)
 	{
 		$this->name = $name;
+
+		return $this;
+	}
+
+	/**
+	 * @param string $tableName
+	 * @return Column
+	 */
+	public function setTableName($tableName)
+	{
+		$this->tableName = $tableName;
 
 		return $this;
 	}
@@ -278,24 +289,6 @@ class Column extends \Nette\Application\UI\PresenterComponent
 		$this->editable = TRUE;
 
 		return $this;
-	}
-
-	/**
-	 * @return Column
-	 */
-	public function markAsAlias()
-	{
-		$this->alias = TRUE;
-
-		return $this;
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function isAlias()
-	{
-		return $this->alias;
 	}
 
 	/**

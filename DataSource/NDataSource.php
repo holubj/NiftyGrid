@@ -26,14 +26,14 @@ class NDataSource implements IDataSource
 		return $this->data;
 	}
 
+	public function getPrimaryKey()
+	{
+		return $this->data->getPrimary();
+	}
+
 	public function getCount($column = "*")
 	{
 		return $this->data->count($column);
-	}
-
-	public function getSelectedRowsCount()
-	{
-		return $this->data->count();
 	}
 
 	public function orderData($by, $way)
@@ -60,25 +60,7 @@ class NDataSource implements IDataSource
 					$column .= $filter["valueFunction"]."(?)";
 				}
 				$this->data->where($column, $value);
-			}elseif($filter["type"] == FilterCondition::HAVING){
-				$having[$filter["column"]] = $filter;
 			}
-		}
-
-		if(!empty($having)){
-			$stringHaving = "";
-			$i = new \Nette\Iterators\CachingIterator($having);
-			foreach($i as $filter){
-				if(!empty($filter["columnFunction"])){
-					$stringHaving .= $filter["columnFunction"]."(".$filter["column"].")".$filter["cond"]."'".Strings::upper($filter["value"])."'";
-				}else{
-					$stringHaving .= $filter["column"].$filter["cond"]."'".Strings::upper($filter["value"])."'";
-				}
-				if(!$i->isLast()){
-					$stringHaving .= " AND ";
-				}
-			}
-			$this->data->group("id", $stringHaving);
 		}
 	}
 }

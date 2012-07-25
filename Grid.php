@@ -383,7 +383,10 @@ class Grid extends \Nette\Application\UI\Control
 	 */
 	public function isSpecificFilterActive($filter)
 	{
-		return !empty($this->filter[$filter]) ? TRUE : FALSE;
+		if(isset($this->filter[$filter])){
+			return ($this->filter[$filter] != '') ? TRUE : FALSE;
+		}
+		return false;
 	}
 
 	/**
@@ -480,7 +483,6 @@ class Grid extends \Nette\Application\UI\Control
 					throw new UnknownFilterException("Neexistující filtr pro sloupec $name");
 				}
 
-				$alias = $this['columns']->components[$name]->isAlias();
 				$type = $this['columns-'.$name]->getFilterType();
 				$filter = FilterCondition::prepareFilter($value, $type);
 
@@ -488,9 +490,8 @@ class Grid extends \Nette\Application\UI\Control
 					$filter = call_user_func("\\NiftyGrid\\FilterCondition::".$filter["condition"], $filter["value"]);
 					if(!empty($this['gridForm'][$this->name]['filter'][$name])){
 						$filter["column"] = $name;
-						if($alias){
-							$filter["type"] = FilterCondition::HAVING;
-							$filter["cond"] = str_replace("?","", $filter["cond"]);
+						if(!empty($this['columns-'.$filter["column"]]->tableName)){
+							$filter["column"] = $this['columns-'.$filter["column"]]->tableName;
 						}
 						$filters[] = $filter;
 					}else{
@@ -538,17 +539,10 @@ class Grid extends \Nette\Application\UI\Control
 	protected function getCount()
 	{
 		if($this->paginate){
-			if($this->hasActiveFilter()){
-				$count = $this->dataSource->getSelectedRowsCount();
-				$this->getPaginator()->itemCount = $count;
-				$this->dataSource->limitData($this->getPaginator()->itemsPerPage, $this->getPaginator()->offset);
-				return $count;
-			}else{
-				$count = $this->dataSource->getCount();
-				$this->getPaginator()->itemCount = $count;
-				$this->dataSource->limitData($this->getPaginator()->itemsPerPage, $this->getPaginator()->offset);
-				return $count;
-			}
+			$count = $this->dataSource->getCount();
+			$this->getPaginator()->itemCount = $count;
+			$this->dataSource->limitData($this->getPaginator()->itemsPerPage, $this->getPaginator()->offset);
+			return $count;
 		}else{
 			$count = $this->dataSource->getCount();
 			$this->getPaginator()->itemCount = $count;
@@ -697,8 +691,6 @@ class Grid extends \Nette\Application\UI\Control
 								break;
 							}
 						}
-						//$gridName = $this->findSubGridPath($gridName);
-
 						if($section == "filter"){
 							$this->filterFormSubmitted($values);
 						}
@@ -831,6 +823,7 @@ class Grid extends \Nette\Application\UI\Control
 		$this->template->colsCount = $this->getColsCount();
 		$rows = $this->dataSource->getData();
 		$this->template->rows = $rows;
+		$this->template->primaryKey = $this->dataSource->getPrimaryKey();
 		if($this->hasActiveRowForm()){
 			$row = $rows[$this->activeRowForm];
 			foreach($row as $name => $value){
@@ -853,6 +846,12 @@ class Grid extends \Nette\Application\UI\Control
 		if($this->paginate){
 			$this->template->viewedFrom = ((($this->getPaginator()->getPage()-1)*$this->perPage)+1);
 			$this->template->viewedTo = ($this->getPaginator()->getLength()+(($this->getPaginator()->getPage()-1)*$this->perPage));
+		}
+		$templatePath = !empty($this->templatePath) ? $this->templatePath : __DIR__."/templates/grid.latte";
+		$this->template->setFile($templatePath);
+		$this->template->render();
+	}
+}or()->getLength()+(($this->getPaginator()->getPage()-1)*$this->perPage));
 		}
 		$templatePath = !empty($this->templatePath) ? $this->templatePath : __DIR__."/templates/grid.latte";
 		$this->template->setFile($templatePath);

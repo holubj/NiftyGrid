@@ -17,15 +17,15 @@ interface IDataSource
 	public function getData();
 
 	/**
+	 * Returns name of Primary key
+	 */
+	public function getPrimaryKey();
+
+	/**
 	 * Returns count of rows on SQL side
 	 * @param string $column
 	 */
 	public function getCount($column = "*");
-
-	/**
-	 * Returns count of rows on PHP side (because HAVING conditions doesn't affect on SQL COUNT)
-	 */
-	public function getSelectedRowsCount();
 
 	/**
 	 * Sort data by given column
@@ -48,7 +48,7 @@ interface IDataSource
 	 * 		column => $name
 	 * 			- name of the column
 	 *
-	 * 		type => WHERE|HAVING
+	 * 		type => WHERE
 	 * 			- type of SQL condition (based on class FilterCondition - condition types)
 	 *
 	 * 		datatype => TEXT|NUMERIC|DATE
