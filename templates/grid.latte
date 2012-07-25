@@ -71,7 +71,7 @@
 				{if $control->activeRowForm == $row[$primaryKey] && $control->isEditable()}
 					{$control['gridForm'][$control->name]['rowForm']['send']->getControl()}
 					<a class="grid-rowForm-cancel grid-ajax" n:href="this" title="Zrušit editaci"></a>
-					{$control['gridForm'][$control->name]['rowForm']['id']->getControl()}
+					{$control['gridForm'][$control->name]['rowForm'][$primaryKey]->getControl()}
 				{else}
 					{foreach $buttons as $button}
 						{control $button $row}

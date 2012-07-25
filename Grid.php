@@ -40,6 +40,9 @@ class Grid extends \Nette\Application\UI\Control
 	/** @var IDataSource */
 	protected $dataSource;
 
+	/** @var string */
+	protected $primaryKey;
+
 	/** @var int */
 	protected $count;
 
@@ -215,8 +218,9 @@ class Grid extends \Nette\Application\UI\Control
 		if($name == self::ROW_FORM){
 			$button = new Button($this['buttons'], $name);
 			$self = $this;
-			$button->setLink(function($row) use($self){
-				return $self->link("showRowForm!", $row['id']);
+			$primaryKey = $this->primaryKey;
+			$button->setLink(function($row) use($self, $primaryKey){
+				return $self->link("showRowForm!", $row[$primaryKey]);
 			});
 		}else{
 			if(!empty($this['buttons']->components[$name])){
@@ -258,23 +262,24 @@ class Grid extends \Nette\Application\UI\Control
 			throw new DuplicateSubGridException("SubGrid $name already exists.");
 		}
 		$self = $this;
+		$primaryKey = $this->primaryKey;
 		$subGrid = new SubGrid($this['subGrids'], $name);
 		$subGrid->setName($name)
 			->setLabel($label);
 		if($this->activeSubGridName == $name){
 			$subGrid->setClass("grid-subgrid-close");
-			$subGrid->setClass(function($row) use ($self){
-				return $row['id'] == $self->activeSubGridId ? "grid-subgrid-close" : "grid-subgrid-open";
+			$subGrid->setClass(function($row) use ($self, $primaryKey){
+				return $row[$primaryKey] == $self->activeSubGridId ? "grid-subgrid-close" : "grid-subgrid-open";
 			});
-			$subGrid->setLink(function($row) use ($self, $name){
-				$link = $row['id'] == $self->activeSubGridId ? array("activeSubGridId" => NULL, "activeSubGridName" => NULL) : array("activeSubGridId" => $row['id'], "activeSubGridName" => $name);
+			$subGrid->setLink(function($row) use ($self, $name, $primaryKey){
+				$link = $row[$primaryKey] == $self->activeSubGridId ? array("activeSubGridId" => NULL, "activeSubGridName" => NULL) : array("activeSubGridId" => $row[$primaryKey], "activeSubGridName" => $name);
 				return $self->link("this", $link);
 			});
 		}
 		else{
 			$subGrid->setClass("grid-subgrid-open")
-			->setLink(function($row) use ($self, $name){
-				return $self->link("this", array("activeSubGridId" => $row['id'], "activeSubGridName" => $name));
+			->setLink(function($row) use ($self, $name, $primaryKey){
+				return $self->link("this", array("activeSubGridId" => $row[$primaryKey], "activeSubGridName" => $name));
 			});
 		}
 		return $subGrid;
@@ -310,6 +315,7 @@ class Grid extends \Nette\Application\UI\Control
 	protected function setDataSource(IDataSource $dataSource)
 	{
 		$this->dataSource = $dataSource;
+		$this->primaryKey = $this->dataSource->getPrimaryKey();
 	}
 
 	/**
@@ -823,7 +829,7 @@ class Grid extends \Nette\Application\UI\Control
 		$this->template->colsCount = $this->getColsCount();
 		$rows = $this->dataSource->getData();
 		$this->template->rows = $rows;
-		$this->template->primaryKey = $this->dataSource->getPrimaryKey();
+		$this->template->primaryKey = $this->primaryKey;
 		if($this->hasActiveRowForm()){
 			$row = $rows[$this->activeRowForm];
 			foreach($row as $name => $value){
@@ -841,7 +847,7 @@ class Grid extends \Nette\Application\UI\Control
 				}
 			}
 			$this['gridForm'][$this->name]['rowForm']->setDefaults($row);
-			$this['gridForm'][$this->name]['rowForm']->addHidden("id", $this->activeRowForm);
+			$this['gridForm'][$this->name]['rowForm']->addHidden($this->primaryKey, $this->activeRowForm);
 		}
 		if($this->paginate){
 			$this->template->viewedFrom = ((($this->getPaginator()->getPage()-1)*$this->perPage)+1);
