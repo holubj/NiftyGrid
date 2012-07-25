@@ -79,7 +79,7 @@
 				{/if}
 			</td>
 		</tr>
-		<tr n:if="$control->hasActiveSubGrid() && $control->activeSubGridId == $row['{$primaryKey}']" class="grid-subgrid-row" align="center">
+		<tr n:if="$control->hasActiveSubGrid() && $control->activeSubGridId == $row[$primaryKey]" class="grid-subgrid-row" align="center">
 			<td colspan="{$colsCount}" n:attr="style => $control['subGrids-'.$control->activeSubGridName]->hasCellStyle() ? $control['subGrids-'.$control->activeSubGridName]->getCellStyle().'border-bottom:1px solid #f2f2f2;'">
 				{control $control['subGrid'.$control->activeSubGridName]}
 			</td>

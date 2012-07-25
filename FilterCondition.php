@@ -386,7 +386,3 @@ class FilterCondition extends \Nette\Object
 		);
 	}
 }
-nction" => "DATE"
-		);
-	}
-}
