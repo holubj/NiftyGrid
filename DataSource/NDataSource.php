@@ -9,8 +9,7 @@
  */
 namespace NiftyGrid;
 
-use NiftyGrid\FilterCondition,
-	Nette\Utils\Strings;
+use NiftyGrid\FilterCondition;
 
 class NDataSource implements IDataSource
 {
