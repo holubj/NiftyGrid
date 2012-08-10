@@ -39,6 +39,11 @@ class DuplicateButtonException extends GridException
 
 }
 
+class DuplicateGlobalButtonException extends GridException
+{
+
+}
+
 class DuplicateActionException extends GridException
 {
 

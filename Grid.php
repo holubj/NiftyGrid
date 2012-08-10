@@ -13,6 +13,8 @@ class Grid extends \Nette\Application\UI\Control
 {
 	const ROW_FORM = "rowForm";
 
+	const ADD_ROW = "addRow";
+
 	/** @persistent array */
 	public $filter;
 
@@ -59,6 +61,9 @@ class Grid extends \Nette\Application\UI\Control
 	public $rowFormCallback;
 
 	/** @var bool */
+	public $showAddRow = FALSE;
+
+	/** @var bool */
 	public $isSubGrid = FALSE;
 
 	/** @var array */
@@ -79,6 +84,7 @@ class Grid extends \Nette\Application\UI\Control
 
 		$this->addComponent(New \Nette\ComponentModel\Container(), "columns");
 		$this->addComponent(New \Nette\ComponentModel\Container(), "buttons");
+		$this->addComponent(New \Nette\ComponentModel\Container(), "globalButtons");
 		$this->addComponent(New \Nette\ComponentModel\Container(), "actions");
 		$this->addComponent(New \Nette\ComponentModel\Container(), "subGrids");
 
@@ -210,26 +216,45 @@ class Grid extends \Nette\Application\UI\Control
 
 	/**
 	 * @param string $name
+	 * @param null|string $label
 	 * @return Button
 	 * @throws DuplicateButtonException
 	 */
 	protected function addButton($name, $label = NULL)
 	{
+		if(!empty($this['buttons']->components[$name])){
+			throw new DuplicateButtonException("Button $name already exists.");
+		}
+		$button = new Button($this['buttons'], $name);
 		if($name == self::ROW_FORM){
-			$button = new Button($this['buttons'], $name);
 			$self = $this;
 			$primaryKey = $this->primaryKey;
 			$button->setLink(function($row) use($self, $primaryKey){
 				return $self->link("showRowForm!", $row[$primaryKey]);
 			});
-		}else{
-			if(!empty($this['buttons']->components[$name])){
-				throw new DuplicateButtonException("Button $name already exists.");
-			}
-			$button = new Button($this['buttons'], $name);
 		}
 		$button->setLabel($label);
 		return $button;
+	}
+
+
+	/**
+	 * @param string $name
+	 * @param null|string $label
+	 * @throws DuplicateGlobalButtonException
+	 * @return GlobalButton
+	 */
+	public function addGlobalButton($name, $label = NULL)
+	{
+		if(!empty($this['globalButtons']->components[$name])){
+			throw new DuplicateGlobalButtonException("Global button $name already exists.");
+		}
+		$globalButton = new GlobalButton($this['globalButtons'], $name);
+		if($name == self::ADD_ROW){
+			$globalButton->setLink($this->link("addRow!"));
+		}
+		$globalButton->setLabel($label);
+		return $globalButton;
 	}
 
 	/**
@@ -353,6 +378,14 @@ class Grid extends \Nette\Application\UI\Control
 	public function hasButtons()
 	{
 		return count($this['buttons']->components) ? TRUE : FALSE;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function hasGlobalButtons()
+	{
+		return count($this['globalButtons']->components) ? TRUE : FALSE;
 	}
 
 	/**
@@ -617,6 +650,11 @@ class Grid extends \Nette\Application\UI\Control
 		}
 	}
 
+	public function handleAddRow()
+	{
+		$this->showAddRow = TRUE;
+	}
+
 	/**
 	 * @param int $id
 	 */
@@ -824,6 +862,7 @@ class Grid extends \Nette\Application\UI\Control
 		$this->template->results = $this->count;
 		$this->template->columns = $this['columns']->components;
 		$this->template->buttons = $this['buttons']->components;
+		$this->template->globalButtons = $this['globalButtons']->components;
 		$this->template->subGrids = $this['subGrids']->components;
 		$this->template->paginate = $this->paginate;
 		$this->template->colsCount = $this->getColsCount();

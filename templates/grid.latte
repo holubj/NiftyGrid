@@ -17,9 +17,16 @@
 		<tr class="grid-panel">
 			<th colspan="{$colsCount}">
 				<div class="grid-upper-panel">
-					<a n:href="this" class="grid-current-link" title="Získat odkaz na tuto stránku"></a>
-					<div class="grid-results">
-						celkem {$results} {($results == 1) ? "záznam" : (($results >= 2 && $results <= 4) ? "záznamy" : "záznamů")}{if $paginate} {if (boolean)$results}(Zobrazeno {$viewedFrom} až {$viewedTo}){/if}{/if}
+					<div n:if="$control->hasGlobalButtons()" class="grid-global-buttons">
+						{foreach $globalButtons as $globalButton}
+							{control $globalButton}
+						{/foreach}
+					</div>
+					<div class="grid-upper-info">
+						<a n:href="this" class="grid-current-link" title="Získat odkaz na tuto stránku"></a>
+						<div class="grid-results">
+							celkem {$results} {($results == 1) ? "záznam" : (($results >= 2 && $results <= 4) ? "záznamy" : "záznamů")}{if $paginate} {if (boolean)$results}(Zobrazeno {$viewedFrom} až {$viewedTo}){/if}{/if}
+						</div>
 					</div>
 				</div>
 			</th>
@@ -53,6 +60,19 @@
 		</tr>
 	</thead>
 	<tbody>
+		<tr n:if="$control->showAddRow && $control->isEditable()">
+			<td n:if="$control->hasActionForm()" class="grid-row-cell grid-edited-cell"></td>
+			<td n:if="count($subGrids)" colspan="count($subGrids)" class="grid-row-cell grid-edited-cell"></td>
+			<td n:foreach="$columns as $column" class="grid-row-cell grid-data-cell grid-edited-cell">
+				{if $column->editable}
+					{$control['gridForm'][$control->name]['rowForm'][$column->name]->getControl()}
+				{/if}
+			</td>
+			<td class="grid-row-cell grid-edited-cell">
+				{$control['gridForm'][$control->name]['rowForm']['send']->getControl()}
+				<a class="grid-rowForm-cancel grid-ajax" n:href="this" title="Zrušit editaci"></a>
+			</td>
+		</tr>
 		{if count($rows)}
 		{foreach $rows as $row}
 		<tr n:attr="class => $iterator->isOdd() ? grid-row-odd : grid-row-even">

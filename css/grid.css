@@ -24,8 +24,11 @@
 
 .grid .grid-upper-panel{
     color: #FFF;
-    float: right;
     font-weight: normal;
+}
+
+.grid .grid-upper-info{
+    float:right;
 }
 
 .grid .grid-current-link{
@@ -42,7 +45,6 @@
     padding: 3px 10px;
     margin-left:28px;
  }
-
 
 .grid th.grid-head-column{
     background-color: #e8e8e8;
@@ -314,6 +316,10 @@
 }
 .grid .grid-subgrid-close{
     background: url('images/subgrid_close.png') no-repeat 4px;
+}
+
+.grid .grid-add-row{
+    background: url('images/add.png') no-repeat 4px;
 }
 
 .grid-flash{
