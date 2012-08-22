@@ -75,6 +75,9 @@ class Grid extends \Nette\Application\UI\Control
 	/** @var string */
 	protected $templatePath;
 
+	/** @var string */
+	public $messageNoRecords = 'Žádné záznamy';
+
 	/**
 	 * @param \Nette\Application\UI\Presenter $presenter
 	 */
@@ -349,6 +352,14 @@ class Grid extends \Nette\Application\UI\Control
 	public function setWidth($width)
 	{
 		$this->width = $width;
+	}
+
+        /**
+	 * @param string $messageNoRecords
+	 */
+	public function setMessageNoRecords($messageNoRecords)
+	{
+		$this->messageNoRecords = $messageNoRecords;
 	}
 
 	/**
