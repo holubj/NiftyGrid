@@ -19,9 +19,9 @@ use Nette,
  * <code>
  * $dataSource = new DibiFluentDataSource(dibi::select('*')->from('employee'), 'id');
  * </code>
- *  
+ *
  * @author  Miloslav Hůla
- * @version 1.0
+ * @version 1.1
  * @licence LGPL
  * @see https://github.com/Niftyx/NiftyGrid
  */
@@ -32,8 +32,17 @@ class DibiFluentDataSource extends Nette\Object implements IDataSource
 
 
 
-	/** $var string  Primary key column name */
+	/** @var string  Primary key column name */
 	private $pKeyColumn;
+
+
+
+	/** @var int  LIMIT clause value */
+	private $limit;
+
+
+	/** @var int  OFFSET clause value */
+	private $offset;
 
 
 
@@ -55,7 +64,7 @@ class DibiFluentDataSource extends Nette\Object implements IDataSource
 
 	public function getData()
 	{
-		return $this->fluent->fetchAssoc($this->pKeyColumn);
+		return $this->fluent->getConnection()->query('%SQL %lmt %ofs', (string) $this->fluent, $this->limit, $this->offset)->fetchAssoc($this->pKeyColumn);
 	}
 
 
@@ -91,7 +100,8 @@ class DibiFluentDataSource extends Nette\Object implements IDataSource
 
 	public function limitData($limit, $offset)
 	{
-		$this->fluent->limit($limit)->offset($offset);
+		$this->limit = $limit;
+		$this->offset = $offset;
 	}
 
 
