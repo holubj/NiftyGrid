@@ -49,6 +49,11 @@ class DoctrineDataSource implements IDataSource
 		return $result;
 	}
 
+	public function getPrimaryKey()
+	{
+		return $this->primary;
+	}
+
 	public function getCount($column = "*")
 	{
         return $this->getSelectedRowsCount();
