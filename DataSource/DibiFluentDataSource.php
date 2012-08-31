@@ -21,25 +21,20 @@ use Nette,
  * </code>
  *
  * @author  Miloslav Hůla
- * @version 1.1
+ * @version 1.2
  * @licence LGPL
- * @see https://github.com/Niftyx/NiftyGrid
+ * @see     https://github.com/Niftyx/NiftyGrid
  */
 class DibiFluentDataSource extends Nette\Object implements IDataSource
 {
 	/** @var DibiFluent */
 	private $fluent;
 
-
-
 	/** @var string  Primary key column name */
 	private $pKeyColumn;
 
-
-
 	/** @var int  LIMIT clause value */
 	private $limit;
-
 
 	/** @var int  OFFSET clause value */
 	private $offset;
@@ -78,15 +73,30 @@ class DibiFluentDataSource extends Nette\Object implements IDataSource
 
 	public function getCount($column = '*')
 	{
+		// @see http://forum.dibiphp.com/cs/792-velky-problem-s-dibidatasource-a-mysql
+
 		$fluent = clone $this->fluent;
 		$fluent->removeClause('SELECT')->removeClause('ORDER BY');
 
 		$modifiers = \DibiFluent::$modifiers;
 		\DibiFluent::$modifiers['SELECT'] = '%sql';
-		$fluent->select(array('COUNT(%n)', $column));
+		$fluent->select(array('COUNT(%n) AS [count]', $column));
 		\DibiFluent::$modifiers = $modifiers;
 
-		return $fluent->fetchSingle();
+		if (strpos((string) $fluent, 'GROUP BY') === FALSE) {
+			return $fluent->fetchSingle();
+		}
+
+		try {
+			return $fluent->execute()->count();
+		} catch (\DibiNotSupportedException $e) {}
+
+		$count = 0;
+		foreach ($fluent as $row) {
+			$count += 1;
+		}
+
+		return $count;
 	}
 
 
