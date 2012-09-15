@@ -49,19 +49,30 @@ $(function(){
 
 
     $(".grid-gridForm").live("submit", function(event){
-        event.preventDefault();
         var button = $(".grid-gridForm-clickedSubmit");
-        var selectName = $(button).data("select");
-        var selected = $("select[name=\""+selectName+"\"] option:selected").data('grid-confirm');
-        if(selected){
-            var answer = confirm(selected);
-            if(answer){
-                $.post(this.action, $(this).serialize()+"&"+$(button).attr("name")+"="+$(button).val());
-                $(button).removeClass("grid-gridForm-clickedSubmit");
+        $(button).removeClass("grid-gridForm-clickedSubmit");
+        if($(button).data("select")){
+            var selectName = $(button).data("select");
+            var option = $("select[name=\""+selectName+"\"] option:selected");
+            if($(option).data("grid-confirm")){
+                var answer = confirm($(option).data("grid-confirm"));
+                if(answer){
+                    if($(option).hasClass("grid-ajax")){
+                        event.preventDefault();
+                        $.post(this.action, $(this).serialize()+"&"+$(button).attr("name")+"="+$(button).val());
+                    }
+                }else{
+                    return false;
+                }
+            }else{
+                if($(option).hasClass("grid-ajax")){
+                    event.preventDefault();
+                    $.post(this.action, $(this).serialize()+"&"+$(button).attr("name")+"="+$(button).val());
+                }
             }
         }else{
+            event.preventDefault();
             $.post(this.action, $(this).serialize()+"&"+$(button).attr("name")+"="+$(button).val());
-            $(button).removeClass("grid-gridForm-clickedSubmit");
         }
     });
 

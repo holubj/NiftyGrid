@@ -23,6 +23,9 @@ class Action extends \Nette\Application\UI\PresenterComponent
 	/** @var callback */
 	public $callback;
 
+	/** @var boolean */
+	public $ajax = TRUE;
+
 	/**
 	 * @param string $name
 	 * @return Action
@@ -75,6 +78,18 @@ class Action extends \Nette\Application\UI\PresenterComponent
 		return $this->callback;
 	}
 
+
+	/**
+	 * @param string $ajax
+	 * @return Action
+	 */
+	public function setAjax($ajax)
+	{
+		$this->ajax = $ajax;
+
+		return $this;
+	}
+
 	/**
 	 * @return mixed
 	 * @throws UnknownActionCallbackException
@@ -84,10 +99,17 @@ class Action extends \Nette\Application\UI\PresenterComponent
 		if(empty($this->callback)){
 			throw new UnknownActionCallbackException("Action $this->name doesn't have callback.");
 		}
+
 		$option = \Nette\Utils\Html::el('option')->setValue($this->name)->setText($this->label);
+
+		if($this->ajax){
+			$option->addClass('grid-ajax');
+		}
+
 		if(!empty($this->dialog)){
 			$option->addData("grid-confirm", $this->dialog);
 		}
+
 		return $option;
 	}
 }
