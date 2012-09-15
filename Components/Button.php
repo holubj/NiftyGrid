@@ -21,13 +21,19 @@ class Button extends \Nette\Application\UI\PresenterComponent
 	private $link;
 
 	/** @var callback|string */
+	private $text;
+
+	/** @var callback|string */
 	private $class;
+
+	/** @var bool */
+	private $ajax = TRUE;
 
 	/** @var callback|string */
 	private $dialog;
 
-	/** @var bool */
-	private $ajax = TRUE;
+	/** @var callback|string */
+	private $show = TRUE;
 
 	/**
 	 * @param string $label
@@ -73,6 +79,29 @@ class Button extends \Nette\Application\UI\PresenterComponent
 			return call_user_func($this->link, $row);
 		}
 		return $this->link;
+	}
+
+	/**
+	 * @param $text
+	 * @return mixed
+	 */
+	public function setText($text)
+	{
+		$this->text = $text;
+
+		return $this;
+	}
+
+	/**
+	 * @param array $row
+	 * @return string
+	 */
+	private function getText($row)
+	{
+		if(is_callable($this->text)){
+			return call_user_func($this->text, $row);
+		}
+		return $this->text;
 	}
 
 	/**
@@ -141,14 +170,42 @@ class Button extends \Nette\Application\UI\PresenterComponent
 	}
 
 	/**
+	 * @param callback|string $show
+	 * @return Button
+	 */
+	public function setShow($show)
+	{
+		$this->show = $show;
+
+		return $this;
+	}
+
+	/**
+	 * @param array $row
+	 * @return callback|mixed|string
+	 */
+	public function getShow($row)
+	{
+		if(is_callable($this->show)){
+			return (boolean) call_user_func($this->show, $row);
+		}
+		return $this->show;
+	}
+
+	/**
 	 * @param array $row
 	 */
 	public function render($row)
 	{
+		if(!$this->getShow($row)){
+			return false;
+		}
+
 		$el = Html::el("a")
 			->href($this->getLink($row))
-			->setClass($this->getClass($row))
+			->setText($this->getText($row))
 			->addClass("grid-button")
+			->addClass($this->getClass($row))
 			->setTitle($this->getLabel($row));
 
 		if($this->getName() == Grid::ROW_FORM) {
