@@ -17,7 +17,7 @@
 		<tr class="grid-panel">
 			<th colspan="{$colsCount}">
 				<div class="grid-upper-panel">
-					<div n:if="$control->hasGlobalButtons()" class="grid-global-buttons">
+					<div n:if="$control->hasGlobalButtons()">
 						{foreach $globalButtons as $globalButton}
 							{control $globalButton}
 						{/foreach}
@@ -34,6 +34,12 @@
 		<tr n:foreach="$flashes as $flash" class="grid-flash {$flash->type}">
 			<th colspan="{$colsCount}">
 				<span>{$flash->message}</span>
+				<div class="grid-flash-hide"></div>
+			</th>
+		</tr>
+		<tr class="grid-flash grid-error" n:foreach="$control['gridForm']->errors as $error">
+			<th colspan="{$colsCount}">
+				<span>{$error}</span>
 				<div class="grid-flash-hide"></div>
 			</th>
 		</tr>

@@ -194,6 +194,19 @@ class Grid extends \Nette\Application\UI\Control
 	}
 
 	/**
+	 * @param string $columnName
+	 * @return \Nette\Forms\IControl
+	 * @throws UnknownColumnException
+	 */
+	public function getColumnInput($columnName)
+	{
+		if(!$this->columnExists($columnName)){
+			throw new UnknownColumnException("Column $columnName doesn't exists.");
+		}
+		return $this['gridForm'][$this->name]['rowForm'][$columnName];
+	}
+
+	/**
 	 * @param string $name
 	 * @param null|string $label
 	 * @param null|string $width
@@ -354,7 +367,7 @@ class Grid extends \Nette\Application\UI\Control
 		$this->width = $width;
 	}
 
-        /**
+	/**
 	 * @param string $messageNoRecords
 	 */
 	public function setMessageNoRecords($messageNoRecords)
@@ -706,11 +719,13 @@ class Grid extends \Nette\Application\UI\Control
 		$form[$this->name]['rowForm']['send']->getControlPrototype()->addClass("grid-editable");
 
 		$form[$this->name]->addContainer("filter");
-		$form[$this->name]['filter']->addSubmit("send","Filtrovat");
+		$form[$this->name]['filter']->addSubmit("send","Filtrovat")
+			->setValidationScope(FALSE);
 
 		$form[$this->name]->addContainer("action");
 		$form[$this->name]['action']->addSelect("action_name","Označené:");
 		$form[$this->name]['action']->addSubmit("send","Potvrdit")
+			->setValidationScope(FALSE)
 			->getControlPrototype()
 			->addData("select", $form[$this->name]["action"]["action_name"]->getControl()->name);
 
@@ -720,7 +735,10 @@ class Grid extends \Nette\Application\UI\Control
 			->addClass("grid-changeperpage")
 			->addData("gridname", $this->getGridPath())
 			->addData("link", $this->link("changePerPage!"));
-		$form[$this->name]['perPage']->addSubmit("send","Ok")->getControlPrototype()->addClass("grid-perpagesubmit");
+		$form[$this->name]['perPage']->addSubmit("send","Ok")
+			->setValidationScope(FALSE)
+			->getControlPrototype()
+			->addClass("grid-perpagesubmit");
 
 		$form->onSuccess[] = callback($this, "processGridForm");
 
