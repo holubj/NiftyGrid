@@ -24,6 +24,9 @@ class Button extends \Nette\Application\UI\PresenterComponent
 	private $text;
 
 	/** @var callback|string */
+	private $target;
+
+	/** @var callback|string */
 	private $class;
 
 	/** @var bool */
@@ -102,6 +105,29 @@ class Button extends \Nette\Application\UI\PresenterComponent
 			return call_user_func($this->text, $row);
 		}
 		return $this->text;
+	}
+
+        /**
+	 * @param callback|string $target
+	 * @return Button
+	 */
+	public function setTarget($target)
+	{
+		$this->target = $target;
+
+		return $this;
+	}
+
+	/**
+	 * @param array $row
+	 * @return callback|mixed|string
+	 */
+	private function getTarget($row)
+	{
+		if(is_callable($this->target)){
+			return call_user_func($this->target, $row);
+		}
+		return $this->target;
 	}
 
 	/**
@@ -206,7 +232,8 @@ class Button extends \Nette\Application\UI\PresenterComponent
 			->setText($this->getText($row))
 			->addClass("grid-button")
 			->addClass($this->getClass($row))
-			->setTitle($this->getLabel($row));
+			->setTitle($this->getLabel($row))
+			->setTarget($this->getTarget($row));
 
 		if($this->getName() == Grid::ROW_FORM) {
 			$el->addClass("grid-editable");
