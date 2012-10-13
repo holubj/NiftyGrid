@@ -49,6 +49,9 @@ class Grid extends \Nette\Application\UI\Control
 	protected $count;
 
 	/** @var string */
+	public $gridName;
+
+	/** @var string */
 	public $width;
 
 	/** @var bool */
@@ -203,6 +206,7 @@ class Grid extends \Nette\Application\UI\Control
 		if(!$this->columnExists($columnName)){
 			throw new UnknownColumnException("Column $columnName doesn't exists.");
 		}
+
 		return $this['gridForm'][$this->name]['rowForm'][$columnName];
 	}
 
@@ -357,6 +361,14 @@ class Grid extends \Nette\Application\UI\Control
 	{
 		$this->dataSource = $dataSource;
 		$this->primaryKey = $this->dataSource->getPrimaryKey();
+	}
+
+	/**
+	 * @param string $gridName
+	 */
+	public function setGridName($gridName)
+	{
+		$this->gridName = $gridName;
 	}
 
 	/**

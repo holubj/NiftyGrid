@@ -22,6 +22,10 @@
     font-size:16px;
 }
 
+.grid .grid-name{
+    font-size: 26px;
+}
+
 .grid .grid-upper-panel{
     color: #FFF;
     font-weight: normal;

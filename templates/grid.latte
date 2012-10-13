@@ -14,6 +14,9 @@
 {/if}
 <table n:attr="style => $control->width ? 'width: '.$control->width.';'" class="grid">
 	<thead>
+		<tr n:if="$control->gridName">
+			<th colspan="{$colsCount}" class="grid-name">{$control->gridName}</th>
+		</tr>
 		<tr class="grid-panel">
 			<th colspan="{$colsCount}">
 				<div class="grid-upper-panel">
