@@ -81,6 +81,9 @@ class Grid extends \Nette\Application\UI\Control
 	/** @var string */
 	public $messageNoRecords = 'Žádné záznamy';
 
+	/** @var \Nette\Localization\ITranslator */
+	protected $translator;
+
 	/**
 	 * @param \Nette\Application\UI\Presenter $presenter
 	 */
@@ -755,6 +758,8 @@ class Grid extends \Nette\Application\UI\Control
 			->getControlPrototype()
 			->addClass("grid-perpagesubmit");
 
+		$form->setTranslator($this->getTranslator());
+
 		$form->onSuccess[] = callback($this, "processGridForm");
 
 		return $form;
@@ -937,7 +942,34 @@ class Grid extends \Nette\Application\UI\Control
 			$this->template->viewedTo = ($this->getPaginator()->getLength()+(($this->getPaginator()->getPage()-1)*$this->perPage));
 		}
 		$templatePath = !empty($this->templatePath) ? $this->templatePath : __DIR__."/templates/grid.latte";
+
+		if ($this->getTranslator() instanceof \Nette\Localization\ITranslator) {
+			$this->template->setTranslator($this->getTranslator());
+		}
+
 		$this->template->setFile($templatePath);
 		$this->template->render();
+	}
+
+	/**
+	 * @param \Nette\Localization\ITranslator $translator
+	 * @return Grid
+	 */
+	public function setTranslator(\Nette\Localization\ITranslator $translator)
+	{
+		$this->translator = $translator;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Nette\Localization\ITranslator|null
+	 */
+	public function getTranslator()
+	{
+		if($this->translator instanceof \Nette\Localization\ITranslator)
+			return $this->translator;
+
+		return null;
 	}
 }
