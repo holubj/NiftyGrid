@@ -222,16 +222,25 @@ class Column extends \Nette\Application\UI\PresenterComponent
 	}
 
 	/**
+	 * @param bool $textarea
+	 * @param null|int $cols
+	 * @param null|int $rows
 	 * @return Column
 	 * @throws DuplicateEditableColumnException
 	 */
-	public function setTextEditable()
+	public function setTextEditable($textarea = FALSE, $cols = NULL, $rows = NULL)
 	{
 		if($this->editable){
 			throw new DuplicateEditableColumnException("Column $this->name is already editable.");
 		}
 
-		$this->parent['gridForm'][$this->parent->name]['rowForm']->addText($this->name, NULL)->getControlPrototype()->addClass("grid-editable");
+		if($textarea){
+			$input = $this->parent['gridForm'][$this->parent->name]['rowForm']->addTextArea($this->name, NULL, $cols, $rows);
+		}else{
+			$input = $this->parent['gridForm'][$this->parent->name]['rowForm']->addText($this->name, NULL);
+		}
+
+		$input->getControlPrototype()->addClass("grid-editable");
 
 		$this->editable = TRUE;
 
