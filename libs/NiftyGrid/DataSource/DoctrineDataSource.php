@@ -7,7 +7,7 @@
  * @license     New BSD Licence
  * @link        http://addons.nette.org/cs/niftygrid
  */
-namespace NiftyGrid;
+namespace NiftyGrid\DataSource;
 
 use NiftyGrid\FilterCondition,
 	Nette\Utils\Strings;

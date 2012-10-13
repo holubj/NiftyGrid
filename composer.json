@@ -1,0 +1,30 @@
+{
+	"name": "nifty/nifty-grid",
+	"type": "nette-addon",
+	"description": "Simple & lightweight datagrid for nette",
+	"keywords": ["datagrid", "nette"],
+	"homepage": "http://addons.nette.org/cs/niftygrid",
+	"license": ["BSD-3"],
+	"authors": [
+		{
+			"name": "Jakub Holub"
+		}
+	],
+	"require": {
+		"php" : ">=5.3.2",
+		"nette/nette" : "*",
+		"nette/addon-installer": "@dev"
+	},
+	"autoload": {
+		"psr-0": { "NiftyGrid": "libs/" },
+		"classmap": [ "libs/NiftyGrid/GridExceptions.php" ]
+	},
+	"extra": {
+		"nette-addon": {
+			"assets": {
+				"css": [ "resources/css/" ],
+				"javascript": [ "resources/js/" ]
+			}
+		}
+	}
+}

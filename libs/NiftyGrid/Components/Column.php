@@ -7,7 +7,12 @@
  * @license     New BSD Licence
  * @link        http://addons.nette.org/cs/niftygrid
  */
-namespace NiftyGrid;
+namespace NiftyGrid\Components;
+
+use Nette;
+use NiftyGrid,
+	NiftyGrid\Grid,
+	NiftyGrid\FilterCondition;
 
 
 class Column extends \Nette\Application\UI\PresenterComponent
@@ -190,15 +195,15 @@ class Column extends \Nette\Application\UI\PresenterComponent
 	/**
 	 * @param int $numOfResults
 	 * @return Column
-	 * @throws InvalidFilterException
-	 * @throws UnknownFilterException
+	 * @throws NiftyGrid\InvalidFilterException
+	 * @throws NiftyGrid\UnknownFilterException
 	 */
 	public function setAutocomplete($numOfResults = 10)
 	{
 		if(empty($this->filterType)){
-			throw new UnknownFilterException("Autocomplete can't be used without filter.");
+			throw new NiftyGrid\UnknownFilterException("Autocomplete can't be used without filter.");
 		}elseif($this->filterType != FilterCondition::TEXT){
-			throw new InvalidFilterException("Autocomplete can be used only with Text filter.");
+			throw new NiftyGrid\InvalidFilterException("Autocomplete can be used only with Text filter.");
 		}
 		$this->parent['gridForm'][$this->parent->name]['filter'][$this->name]->getControlPrototype()
 			->addClass("grid-autocomplete")
@@ -225,13 +230,13 @@ class Column extends \Nette\Application\UI\PresenterComponent
 	 * @param bool $textarea
 	 * @param null|int $cols
 	 * @param null|int $rows
+	 * @throws NiftyGrid\DuplicateEditableColumnException
 	 * @return Column
-	 * @throws DuplicateEditableColumnException
 	 */
 	public function setTextEditable($textarea = FALSE, $cols = NULL, $rows = NULL)
 	{
 		if($this->editable){
-			throw new DuplicateEditableColumnException("Column $this->name is already editable.");
+			throw new NiftyGrid\DuplicateEditableColumnException("Column $this->name is already editable.");
 		}
 
 		if($textarea){
@@ -251,12 +256,12 @@ class Column extends \Nette\Application\UI\PresenterComponent
 	 * @param array $values
 	 * @param string|null $prompt
 	 * @return Column
-	 * @throws DuplicateEditableColumnException
+	 * @throws NiftyGrid\DuplicateEditableColumnException
 	 */
 	public function setSelectEditable(array $values, $prompt = NULL)
 	{
 		if($this->editable){
-			throw new DuplicateEditableColumnException("Column $this->name is already editable.");
+			throw new NiftyGrid\DuplicateEditableColumnException("Column $this->name is already editable.");
 		}
 		$this->parent['gridForm'][$this->parent->name]['rowForm']->addSelect($this->name, NULL, $values)->getControlPrototype()->addClass("grid-editable");
 		if($prompt){
@@ -270,12 +275,12 @@ class Column extends \Nette\Application\UI\PresenterComponent
 
 	/**
 	 * @return Column
-	 * @throws DuplicateEditableColumnException
+	 * @throws NiftyGrid\DuplicateEditableColumnException
 	 */
 	public function setBooleanEditable()
 	{
 		if($this->editable){
-			throw new DuplicateEditableColumnException("Column $this->name is already editable.");
+			throw new NiftyGrid\DuplicateEditableColumnException("Column $this->name is already editable.");
 		}
 		$this->parent['gridForm'][$this->parent->name]['rowForm']->addCheckbox($this->name, NULL)->getControlPrototype()->addClass("grid-editable");
 
@@ -286,12 +291,12 @@ class Column extends \Nette\Application\UI\PresenterComponent
 
 	/**
 	 * @return Column
-	 * @throws DuplicateEditableColumnException
+	 * @throws NiftyGrid\DuplicateEditableColumnException
 	 */
 	public function setDateEditable()
 	{
 		if($this->editable){
-			throw new DuplicateEditableColumnException("Column $this->name is already editable.");
+			throw new NiftyGrid\DuplicateEditableColumnException("Column $this->name is already editable.");
 		}
 		$this->parent['gridForm'][$this->parent->name]['rowForm']->addText($this->name, NULL)->getControlPrototype()->addClass("grid-datepicker")->addClass("grid-editable");
 

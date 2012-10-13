@@ -7,7 +7,10 @@
  * @license     New BSD Licence
  * @link        http://addons.nette.org/cs/niftygrid
  */
-namespace NiftyGrid;
+namespace NiftyGrid\Components;
+
+use Nette;
+use NiftyGrid;
 
 class Action extends \Nette\Application\UI\PresenterComponent
 {
@@ -92,7 +95,7 @@ class Action extends \Nette\Application\UI\PresenterComponent
 
 	/**
 	 * @return mixed
-	 * @throws UnknownActionCallbackException
+	 * @throws NiftyGrid\UnknownActionCallbackException
 	 */
 	public function getAction()
 	{

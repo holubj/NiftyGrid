@@ -7,42 +7,42 @@
  * @license     New BSD Licence
  * @link        http://addons.nette.org/cs/niftygrid
  */
-namespace NiftyGrid;
+namespace NiftyGrid\DataSource;
 
 use NiftyGrid\FilterCondition;
 
 class NDataSource implements IDataSource
 {
-	private $data;
+	private $table;
 
-	public function __construct($data)
+	public function __construct($table)
 	{
-		$this->data = $data;
+		$this->table = $table;
 	}
 
 	public function getData()
 	{
-		return $this->data;
+		return $this->table;
 	}
 
 	public function getPrimaryKey()
 	{
-		return $this->data->getPrimary();
+		return $this->table->getPrimary();
 	}
 
 	public function getCount($column = "*")
 	{
-		return $this->data->count($column);
+		return $this->table->count($column);
 	}
 
 	public function orderData($by, $way)
 	{
-		$this->data->order($by." ".$way);
+		$this->table->order($by." ".$way);
 	}
 
 	public function limitData($limit, $offset)
 	{
-		$this->data->limit($limit, $offset);
+		$this->table->limit($limit, $offset);
 	}
 
 	public function filterData(array $filters)
@@ -58,7 +58,7 @@ class NDataSource implements IDataSource
 				if(!empty($filter["valueFunction"])){
 					$column .= $filter["valueFunction"]."(?)";
 				}
-				$this->data->where($column, $value);
+				$this->table->where($column, $value);
 			}
 		}
 	}

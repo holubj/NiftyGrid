@@ -109,6 +109,8 @@ $(function(){
 
     function setDatepicker()
     {
+        if ( ! $.datepicker ) return;
+
         $.datepicker.regional['cs'] = {
             closeText: 'Zavřít',
             prevText: '&#x3c;Dříve',
