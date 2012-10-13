@@ -584,7 +584,10 @@ class Grid extends \Nette\Application\UI\Control
 	{
 		try{
 			$order = explode(" ", $order);
-			if(in_array($order[0], $this->getColumnNames()) && in_array($order[1], array("ASC", "DESC")) && $this['columns']->components[$order[0]]->isSortable()){
+			if(in_array($order[0], $this->getColumnNames()) && in_array($order[1], array("ASC", "DESC")) && $this['columns-'.$order[0]]->isSortable()){
+				if(!empty($this['columns-'.$order[0]]->tableName)){
+					$order[0] = $this['columns-'.$order[0]]->tableName;
+				}
 				$this->dataSource->orderData($order[0], $order[1]);
 			}else{
 				throw new InvalidOrderException("Neplatné seřazení.");
