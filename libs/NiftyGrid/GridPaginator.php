@@ -42,5 +42,4 @@ class GridPaginator extends \Nette\Application\UI\Control
 		parent::loadState($params);
 		$this->paginator->page = $this->page;
 	}
-}	}
 }
