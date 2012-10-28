@@ -19,7 +19,7 @@ abstract class Grid extends \Nette\Application\UI\Control
 	const ADD_ROW = "addRow";
 
 	/** @persistent array */
-	public $filter;
+	public $filter = array();
 
 	/** @persistent string */
 	public $order;
