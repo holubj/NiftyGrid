@@ -9,29 +9,30 @@
 */
 *}
 {if $paginator->pageCount > 1}
-<div class="grid-paginator">
-	{foreach range($paginator->getBase(), $paginator->getPageCount()) as $page}
-	{/foreach}
-	{if !$paginator->isFirst()}
-		<a href="{link this, 'page' => $paginator->getFirstPage()}" class="grid-ajax">&lt;&lt;</a>
-	{else}
-		<span>&lt;&lt;</span>
-	{/if}
-	{if $paginator->getPage() - 1 >= $paginator->getFirstPage()}
-		<a href="{link this, 'page' => $paginator->getPage() - 1}" class="grid-ajax">&lt;</a>
-	{else}
-		<span>&lt;</span>
-	{/if}
-	<span class="grid-current" data-lastpage="{$paginator->getLastPage()}">{$paginator->getPage()}</span>
-	{if $paginator->getPage() + 1 <= $paginator->getLastPage()}
-		<a href="{link this, 'page' => $paginator->getPage() + 1}" class="grid-ajax">&gt;</a>
-	{else}
-		<span>&gt;</span>
-	{/if}
-	{if !$paginator->isLast()}
-		<a href="{link this, 'page' => $paginator->getLastPage()}" class="grid-ajax">&gt;&gt;</a>
-	{else}
-		<span>&gt;&gt;</span>
-	{/if}
+<div class="pagination pull-right">
+	<ul>
+		{if !$paginator->isFirst()}
+			<li><a href="{link this, 'page' => $paginator->getFirstPage()}" class="grid-ajax">&lt;&lt;</a></li>
+		{else}
+			<li class="disabled"><span>&lt;&lt;</span></li>
+		{/if}
+
+		{if $paginator->getPage() - 1 >= $paginator->getFirstPage()}
+			<li><a href="{link this, 'page' => $paginator->getPage() - 1}" class="grid-ajax">&lt;</a></li>
+			{else}
+			<li class="disabled"><span>&lt;</span></li>
+		{/if}
+		<li class="active"><span class="grid-current" data-lastpage="{$paginator->getLastPage()}">{$paginator->getPage()}</span></li>
+		{if $paginator->getPage() + 1 <= $paginator->getLastPage()}
+			<li><a href="{link this, 'page' => $paginator->getPage() + 1}" class="grid-ajax">&gt;</a></li>
+			{else}
+			<li class="disabled"><span>&gt;</span></li>
+		{/if}
+		{if !$paginator->isLast()}
+			<li><a href="{link this, 'page' => $paginator->getLastPage()}" class="grid-ajax">&gt;&gt;</a></li>
+			{else}
+			<li class="disabled"><span>&gt;&gt;</span></li>
+		{/if}
+	</ul>
 </div>
 {/if}

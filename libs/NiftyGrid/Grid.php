@@ -317,9 +317,11 @@ abstract class Grid extends \Nette\Application\UI\Control
 		$subGrid->setName($name)
 			->setLabel($label);
 		if($this->activeSubGridName == $name){
-			$subGrid->setClass("grid-subgrid-close");
 			$subGrid->setClass(function($row) use ($self, $primaryKey){
-				return $row[$primaryKey] == $self->activeSubGridId ? "grid-subgrid-close" : "grid-subgrid-open";
+				return $row[$primaryKey] == $self->activeSubGridId ? "btn-warning" : "btn-success";
+			});
+			$subGrid->setIcon(function($row) use ($self, $primaryKey){
+				return $row[$primaryKey] == $self->activeSubGridId ? "icon-minus" : "icon-plus";
 			});
 			$subGrid->setLink(function($row) use ($self, $name, $primaryKey){
 				$link = $row[$primaryKey] == $self->activeSubGridId ? array("activeSubGridId" => NULL, "activeSubGridName" => NULL) : array("activeSubGridId" => $row[$primaryKey], "activeSubGridName" => $name);
@@ -327,10 +329,11 @@ abstract class Grid extends \Nette\Application\UI\Control
 			});
 		}
 		else{
-			$subGrid->setClass("grid-subgrid-open")
-			->setLink(function($row) use ($self, $name, $primaryKey){
-				return $self->link("this", array("activeSubGridId" => $row[$primaryKey], "activeSubGridName" => $name));
-			});
+			$subGrid->setClass("btn-success")
+				->setIcon('icon-plus')
+				->setLink(function($row) use ($self, $name, $primaryKey){
+					return $self->link("this", array("activeSubGridId" => $row[$primaryKey], "activeSubGridName" => $name));
+				});
 		}
 		return $subGrid;
 	}
@@ -585,11 +588,11 @@ abstract class Grid extends \Nette\Application\UI\Control
 			return $this->dataSource->filterData($filters);
 		}
 		catch(UnknownColumnException $e){
-			$this->flashMessage($e->getMessage(), "grid-error");
+			$this->flashMessage($e->getMessage(), "alert-error");
 			$this->redirect("this", array("filter" => NULL));
 		}
 		catch(UnknownFilterException $e){
-			$this->flashMessage($e->getMessage(), "grid-error");
+			$this->flashMessage($e->getMessage(), "alert-error");
 			$this->redirect("this", array("filter" => NULL));
 		}
 	}
@@ -612,7 +615,7 @@ abstract class Grid extends \Nette\Application\UI\Control
 			}
 		}
 		catch(InvalidOrderException $e){
-			$this->flashMessage($e->getMessage(), "grid-error");
+			$this->flashMessage($e->getMessage(), "alert-error");
 			$this->redirect("this", array("order" => NULL));
 		}
 	}
@@ -742,7 +745,8 @@ abstract class Grid extends \Nette\Application\UI\Control
 
 		$form[$this->name]->addContainer("filter");
 		$form[$this->name]['filter']->addSubmit("send","Filtrovat")
-			->setValidationScope(FALSE);
+			->setValidationScope(FALSE)
+			->getControlPrototype()->class('btn btn-primary');
 
 		$form[$this->name]->addContainer("action");
 		$form[$this->name]['action']->addSelect("action_name","Označené:");
@@ -860,9 +864,9 @@ abstract class Grid extends \Nette\Application\UI\Control
 		}
 		catch(NoRowSelectedException $e){
 			if($subGrid){
-				$this[$gridName]->flashMessage("Nebyl vybrán žádný záznam.","grid-error");
+				$this[$gridName]->flashMessage("Nebyl vybrán žádný záznam.","alert-error");
 			}else{
-				$this->flashMessage("Nebyl vybrán žádný záznam.","grid-error");
+				$this->flashMessage("Nebyl vybrán žádný záznam.","alert-error");
 			}
 			$this->redirect("this");
 		}

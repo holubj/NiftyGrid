@@ -26,6 +26,12 @@ class GlobalButton extends \Nette\Application\UI\PresenterComponent
 	/** @var bool */
 	private $ajax = TRUE;
 
+	/** @var string */
+	private $icon;
+
+	/** @var string */
+	private $text;
+
 	/**
 	 * @param string $label
 	 * @return Button
@@ -81,14 +87,41 @@ class GlobalButton extends \Nette\Application\UI\PresenterComponent
 		return $this;
 	}
 
+	/**
+	 * @param string $icon
+	 * @return GlobalButton
+	 */
+	public function setIcon($icon)
+	{
+		$this->icon = $icon;
+
+		return $this;
+	}
+
+	public function setText($text)
+	{
+		$this->text = $text;
+
+		return $this;
+	}
+
 	public function render()
 	{
 		$el = Html::el("a")
 			->href($this->getLink())
 			->setClass($this->class)
-			->addClass("grid-button")
-			->addClass("grid-global-button")
-			->setTitle($this->label);
+			->addClass("btn btn-mini")
+			->setTitle($this->label)
+			->setStyle('margin-right: 5px;');
+
+		if(!empty($this->icon)){
+			$icon = \Nette\Utils\Html::el('i')->setClass($this->icon);
+			$el->add($icon);
+		}
+
+		if(!empty($this->text)){
+			$el->add(' '.$this->text);
+		}
 
 		if($this->getName() == Grid::ADD_ROW) {
 			$el->addClass("grid-add-row");

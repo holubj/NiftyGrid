@@ -38,6 +38,9 @@ class Button extends \Nette\Application\UI\PresenterComponent
 	/** @var callback|string */
 	private $show = TRUE;
 
+	/** @var callback|string */
+	private $icon;
+
 	/**
 	 * @param string $label
 	 * @return Button
@@ -219,6 +222,29 @@ class Button extends \Nette\Application\UI\PresenterComponent
 	}
 
 	/**
+	 * @param callback|string $icon
+	 * @return Button
+	 */
+	public function setIcon($icon)
+	{
+		$this->icon = $icon;
+
+		return $this;
+	}
+
+	/**
+	 * @param array $row
+	 * @return bool
+	 */
+	public function getIcon($row)
+	{
+		if(is_callable($this->icon)){
+			return call_user_func($this->icon, $row);
+		}
+		return $this->icon;
+	}
+
+	/**
 	 * @param array $row
 	 */
 	public function render($row)
@@ -229,11 +255,19 @@ class Button extends \Nette\Application\UI\PresenterComponent
 
 		$el = Html::el("a")
 			->href($this->getLink($row))
-			->setText($this->getText($row))
-			->addClass("grid-button")
+			->addClass("grid-button btn btn-small")
 			->addClass($this->getClass($row))
 			->setTitle($this->getLabel($row))
 			->setTarget($this->getTarget($row));
+
+		if(!empty($this->icon)){
+			$icon = Html::el('i')->setClass($this->getIcon($row));
+			$el->add($icon);
+		}
+
+		if(!empty($this->text)){
+			$el->add(' '.$this->getText($row));
+		}
 
 		if($this->getName() == Grid::ROW_FORM) {
 			$el->addClass("grid-editable");

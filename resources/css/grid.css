@@ -1,360 +1,168 @@
+.grid{margin-bottom: 0px;}
 
-.grid{
-    border: 0;
-    margin: 0;
-    padding: 0;
-    border-spacing:0;
-    border-collapse:collapse;
-    clear:both;
+.grid-upper{margin-bottom: 0px;}
+
+.grid-upper th{border: 0;}
+
+.grid thead th { vertical-align:middle; }
+
+.grid th, .grid td { vertical-align:middle; }
+
+.grid .grid-filter-form input[type="text"] {
+    width:100%;
+	padding-left:0;
+	padding-right:0;
 }
 
-.grid input[type=submit]{
-    border:0;
-    background-color: #000000;
-    color:#FFF;
-    cursor:pointer;
-    text-align:center;
-    font-size:16px;
-    float:left;
-}
-
-.grid select{
-    font-size:16px;
-}
-
-.grid .grid-name{
-    font-size: 26px;
-}
-
-.grid .grid-upper-panel{
-    color: #FFF;
-    font-weight: normal;
-}
-
-.grid .grid-upper-info{
-    float:right;
-}
-
-.grid .grid-current-link{
-    background: url("images/link.png") no-repeat 3px 3px;
-    width:21px;
-    height:21px;
-    display:inline-block;
-    float:left;
-}
-
-.grid .grid-results{
-    background-color: #000;
-    height: 19px;
-    padding: 3px 10px;
-    margin-left:28px;
- }
-
-.grid th.grid-head-column{
-    background-color: #e8e8e8;
-    height: 30px;
-    font-size: 16px;
-    padding: 0px 10px;
-    text-align:left;
-}
-
-.grid th.grid-head-column a{
-    text-decoration:none;
-    color:#000;
-}
-
-.grid tr.grid-row-odd{
-    background-color:#FFF;
-}
-
-.grid tr.grid-row-even{
-    background-color:#f8f8f8;
-}
-
-.grid tr td.grid-row-cell{
-    height: 30px;
-    font-size: 14px;
-    padding:0px 10px 0px 10px;
-    border-right:1px solid #f2f2f2;
-    border-bottom: 1px solid #f2f2f2;
-}
-
-.grid tr td.grid-row-cell:first-child{
-    border-left:1px solid #f2f2f2;
+.grid .grid-filter-form select {
+    width:100%;
 }
 
 .grid .grid-order{
-    display: inline-block;
+    display: block;
     width: 10px;
-    height: 15px;
-    margin-top: 3px;
-    position: absolute;
+    height: 25px;
+    float:left;
     margin-left: 5px;
+	margin-top:-3px;
 }
 
+.grid .grid-head-column .grid-label { float:left; display:block; }
+
 .grid .grid-order .grid-order-up{
-    background: url("images/triangle-up.png") no-repeat;
-    width: 10px;
-    height: 7px;
+    width: 13px;
+    height: 8px;
     display: block;
 }
 
 .grid .grid-order .grid-order-down{
-    background: url("images/triangle-down.png") no-repeat;
-    width: 10px;
-    height: 7px;
+    width: 13px;
+    height: 8px;
     display: block;
-    margin-top: 1px;
-}
-
-.grid .grid-order .grid-order-active-up{
-    background: url("images/triangle-up-red.png") no-repeat;
-}
-
-.grid .grid-order .grid-order-active-down{
-    background: url("images/triangle-down-red.png") no-repeat;
-}
-
-.grid .grid-bottom{
-    background:#e8e8e8;
-    height:30px;
-    padding:0px 10px;
-}
-
-.grid .grid-action-box{
-    float:left;
-}
-
-.grid .grid-action-box label{
-    float: left;
-    font-size: 14px;
-    line-height: 30px;
-    margin-right: 10px;
-}
-
-.grid .grid-action-box input[type="submit"]{
-    height: 26px;
-    width: 75px;
     margin-top: 2px;
-    padding-bottom: 2px;
 }
 
-.grid .grid-action-box select{
-    float: left;
-    width: 170px;
-    margin-right: 5px;
-    margin-top: 2px;
-    height: 26px;
-    font-size: 16px;
-    border: 1px solid #ccc;
+.grid .grid-order i {
+	margin:0;
+	opacity: 0.5;
+	filter: alpha(opacity=50);
+	-moz-opacity: 0.5;
+	-khtml-opacity: 0.5;
 }
 
-.grid .grid-perPage{
-    float:right;
-}
-
-.grid .grid-perPage label{
-    float: left;
-    font-size: 14px;
-    line-height: 30px;
-    margin-right: 10px;
-}
-
-.grid .grid-perPage select{
-    float: left;
-    width: 75px;
-    height: 26px;
-    margin-top: 2px;
-    border: 1px solid #ccc;
-}
-
-.grid .grid-perPage input[type="submit"]{
-    height: 26px;
-    width: 30px;
-    padding-bottom: 2px;
-    margin-top: 2px;
-    margin-left:5px;
-}
-
-.grid .grid-paginator{
-    float: right;
-    margin-right: 10px;
-    margin-top: 10px;
-}
-
-.grid .grid-paginator a, .grid-paginator span {
-    color: #999;
-    background-color: #e8e8e8;
-    font-size: 16px;
-    display:inline-block;
-    height:18px;
-    line-height: 20px;
-    padding:4px 8px;
-}
-
-.grid .grid-paginator a {
-    color: #FFF;
-    background-color: #000;
-    text-decoration: none;
-    display:inline-block;
-    height:18px;
-    line-height: 20px;
-}
-
-.grid .grid-paginator .grid-current {
-    background: #e8e8e8;
-    color: #999;
-    font-weight: bold;
-    display:inline-block;
-    height:18px;
-    line-height: 20px;
-    padding:4px 8px;
-}
-
-.grid .grid-filter-form{
-    background-color:#ccc;
-    padding:0px 10px;
-    height:34px;
-}
-
-.grid .grid-filter-form-active{
-    background-color: #0078ff;
-}
-
-.grid .grid-filter-form input[type="text"]{
-    width:100%;
-    height:24px;
-    color:#000;
-    background-color:#FFF;
-    padding:0px;
-    border:0;
-    font-size:16px;
-}
-
-.grid .grid-filter-form select{
-    width:100%;
-    border: 1px solid #ccc;
-    height:26px;
-    font-size:16px;
-}
-
-.grid .grid-filter-form input[type="submit"]{
-    height:24px;
-    width:70px;
-    margin-right:1px;
-}
-
-.grid .grid-filter-reset{
-    width:24px;
-    height:24px;
-    background: url('images/cancel_white.png') no-repeat #0078ff 3px;
-    display:block;
-    margin-left:71px;
-}
-
-.grid .grid-datepicker{
-    background: url("images/calendar.png") no-repeat right center;
-}
-
-.grid .grid-panel td, .grid-panel th{
-    border:0px solid #F0F;
-    padding:0;
-    margin:0;
-}
-
-.grid .grid-button{
-    min-width: 24px;
-    min-height: 22px;
-    display: block;
-    float: left;
-}
-
-.ui-autocomplete{
-    padding:0;
-}
-
-.ui-menu-item{
-    text-align:left;
-    list-style:none;
-    margin-left:10px;
-    font-size:14px;
+.grid .grid-order a:hover i, .grid .grid-order a.active i {
+	opacity: 1;
+	filter: alpha(opacity=50);
+	-moz-opacity: 0.5;
+	-khtml-opacity: 0.5;
 }
 
 .grid input[type="text"].grid-editable{
-    padding:0px;
-    height:25px;
     width:100%;
-    background-color:#FFF;
-    border: 1px solid #ccc;
-    font-size:14px;
+	padding-left:0;
+	padding-right:0;
 }
 
-.grid input[type="submit"].grid-editable{
-    height: 24px;
-    width: 70px;
+.grid textarea.grid-editable{
+    width:100%;
+	padding-left:0;
+	padding-right:0;
 }
 
-.grid a.grid-rowForm-cancel{
-    border:0;
-    background: url("images/cancel_white.png") no-repeat scroll 3px 50% #0078FF;
-    display: block;
-    height: 24px;
-    margin-left: 71px;
-    width: 24px;
+.grid .grid-filter-row th {
+	background-color:#f2f2f2;
 }
 
 .grid select.grid-editable{
     width:100%;
-    height:25px;
-    border: 1px solid #ccc;
-    font-size:14px;
 }
 
-.grid .grid-edited-cell{
-    background-color: #e5e5e5;
+.grid textarea.grid-editable{
+    width:100%;
 }
 
-.grid .grid-subgrid-open{
-    background: url('images/subgrid_open.png') no-repeat 4px;
-}
-.grid .grid-subgrid-close{
-    background: url('images/subgrid_close.png') no-repeat 4px;
+.grid .grid-side-bordered { border-left:1px solid #dddddd; border-right:1px solid #dddddd; }
+
+.grid-filter-form { background-color: #fafafa; }
+
+.grid .grid-head-column {
+	padding-top:8px;
+	padding-bottom:8px;
+	font-size:14px;
+	background-color: #fafafa;
+	background-image: -moz-linear-gradient(bottom, #f2f2f2, #ffffff);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f2f2f2), to(#ffffff));
+	background-image: -webkit-linear-gradient(bottom, #f2f2f2, #ffffff);
+	background-image: -o-linear-gradient(bottom, #f2f2f2, #ffffff);
+	background-image: linear-gradient(to top, #f2f2f2, #ffffff);
 }
 
-.grid .grid-add-row{
-    background: url('images/add.png') no-repeat 4px;
+.grid-upper .grid-panel { padding:0; border:0; vertical-align:bottom; position:relative;}
+
+.grid-upper .grid-panel .grid-panel-inner { position:relative; min-height:30px; }
+
+.grid-upper .grid-panel .grid-panel-inner .grid-upper-info { position:absolute; bottom:0; right:0;  margin-right: 10px;}
+
+.grid-upper .grid-panel .grid-global-buttons {padding-top: 5px; margin-left: 10px;}
+
+.grid-upper .grid-results {
+    display:inline-block;
+    background:#f5f5f5;
+    padding:5px 10px;
+    color:#535353;
+    -moz-border-top-left-radius:4px;
+    -moz-border-top-right-radius:4px;
+    -webkit-border-top-left-radius:4px;
+    -webkit-border-top-right-radius:4px;
+    border-top-left-radius:4px;
+    border-top-right-radius:4px;
+    border: 1px solid #E8E8E8;
+    background-color: #fafafa;
+    background-image: -moz-linear-gradient(bottom, #f2f2f2, #ffffff);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f2f2f2), to(#ffffff));
+    background-image: -webkit-linear-gradient(bottom, #f2f2f2, #ffffff);
+    background-image: -o-linear-gradient(bottom, #f2f2f2, #ffffff);
+    background-image: linear-gradient(to top, #f2f2f2, #ffffff);
 }
 
-.grid-flash{
-    height: 30px;
-    text-align:left;
+.grid .grid-datepicker{
+    background-image: url("../images/calendar.png");
+	background-repeat:no-repeat;
+	background-position:right center;
 }
 
-.grid-flash span{
-    color: #FFF;
-    padding-top: 4px;
-    padding-left: 20px;
-    font-weight:normal;
+.grid .grid-bottom { background-color:#f5f5f5; }
+
+.grid .grid-changeperpage{
+    width: 80px;
 }
 
-.grid-flash-hide{
-    float: right;
-    margin-right: 20px;
-    cursor: pointer;
-    background: url("images/cross.png") no-repeat;
-    width: 22px;
-    height: 22px;
-    display: block;
+.grid .grid-current-link{
+    display:inline-block;
+	margin-right:10px;
 }
 
-.grid-error{
-    background-color: #ef4040;
-}
+.grid .alert { margin:5px 0; }
 
-.grid-info{
-    background-color: #0078ff;
-}
+.grid .grid-flashes th { padding:0; border:0; }
 
-.grid-successful{
-    background-color: #25c319;
-}
+.grid .grid-row-odd td { background-color:#f9f9f9; }
+.grid .grid-row-even td { background-color:#ffffff; }
+.grid .grid-row-odd:hover td, .grid .grid-row-even:hover td { background-color:#e7e7e7; }
+
+/* Cell individual classes */
+
+.grid .cell-center { text-align:center; }
+.grid .cell-small { font-size:11px; }
+.grid .cell-bold { font-weight:bold; }
+
+/* Cell background-colors */
+
+.grid td.cell-green { background-color:#dff0d8 !important; }
+.grid tr:hover > td.cell-green { background-color:#d0e9c6 !important; }
+.grid .cell-red { background-color:#f2dede !important; }
+.grid tr:hover > td.cell-red { background-color:#ebcccc !important; }
+.grid .cell-yellow { background-color:#fcf8e3 !important; }
+.grid tr:hover > td.cell-yellow { background-color:#faf2cc !important; }
+.grid .cell-blue { background-color:#d9edf7 !important; }
+.grid tr:hover > td.cell-blue { background-color:#c4e3f3 !important; }
